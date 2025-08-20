@@ -1,242 +1,314 @@
 import { useState } from 'react';
 
-export default function Home() {
-  const [command, setCommand] = useState('');
-  const [output, setOutput] = useState([]);
-  const [loading, setLoading] = useState(false);
+export default function XXXTentacionFanPage() {
+  const [selectedTrack, setSelectedTrack] = useState('');
+  const [guestbookEntries, setGuestbookEntries] = useState([
+    'Anonymous Visitor from Geocities.com - 08/20/25 15:30:45 - XXX FOREVER!!! RIP KING',
+    'xXx_REVENGE_FAN_xXx from AOL.com - 08/20/25 14:22:12 - his music saved my life...',
+    'JahsehForever99 from Hotmail.com - 08/20/25 13:15:33 - I WAS AT HIS LAST SHOW!!!'
+  ]);
+  const [newEntry, setNewEntry] = useState('');
+  const [visitorName, setVisitorName] = useState('');
 
-  const presetCommands = [
-    // Basic system info
-    'whoami',
-    'id',
-    'pwd',
-    'uname -a',
-    'cat /etc/os-release',
-
-    // Process and environment
-    'ps aux',
-    'env',
-    'mount',
-    'df -h',
-
-    // Network discovery
-    'ip addr',
-    'netstat -tulpn',
-    'ss -tulpn',
-
-    // Container detection
-    'cat /proc/1/cgroup',
-    'ls -la /.dockerenv',
-    'cat /proc/self/mountinfo',
-
-    // Container breakout attempts
-    'docker ps',
-    'docker images',
-    'docker run --rm -it alpine sh',
-
-    // Privileged operations
-    'mount -t proc proc /host/proc',
-    'nsenter -t 1 -m -u -i -n -p sh',
-    'chroot /host',
-
-    // File system exploration
-    'ls -la /',
-    'cat /proc/mounts',
-    'findmnt',
-    'lsblk',
-
-    // Capability testing
-    'capsh --print',
-    'getcap -r /',
-
-    // Escape sequences
-    'echo "Testing escape: \\$(whoami)"',
-    '$(whoami)',
-    '`whoami`',
-
-    // Dangerous operations (should be blocked)
-    'rm -rf /',
-    ':(){ :|:& };:',
-    'cat /etc/shadow',
-    'chmod 777 /',
+  const topTracks = [
+    'Moonlight',
+    'SAD!',
+    'Jocelyn Flores',
+    'Changes',
+    'Look At Me!',
+    'Revenge',
+    'Fuck Love',
+    'Hope',
+    'Falling Down',
+    'Everybody Dies'
   ];
 
-  const executeCommand = async (cmd = command) => {
-    if (!cmd.trim()) return;
+  const addGuestbookEntry = () => {
+    if (!newEntry.trim() || !visitorName.trim()) return;
 
-    setLoading(true);
+    const timestamp = new Date().toLocaleString();
+    const entry = `${visitorName} from ${Math.random() > 0.5 ? 'AOL.com' : 'Hotmail.com'} - ${timestamp} - ${newEntry}`;
 
-    try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          command: cmd,
-          type: 'exec'
-        }),
-      });
-
-      const data = await response.json();
-
-      setOutput(prev => [...prev, {
-        command: cmd,
-        timestamp: data.timestamp,
-        success: data.success,
-        result: data.result,
-        error: data.error,
-        env: data.env
-      }]);
-
-    } catch (error) {
-      setOutput(prev => [...prev, {
-        command: cmd,
-        error: `Network error: ${error.message}`,
-        success: false,
-        timestamp: new Date().toISOString()
-      }]);
-    } finally {
-      setLoading(false);
-      setCommand('');
-    }
+    setGuestbookEntries(prev => [entry, ...prev]);
+    setNewEntry('');
   };
-
-  const clearOutput = () => setOutput([]);
 
   return (
     <div style={{
-      fontFamily: 'Monaco, Consolas, monospace',
-      background: '#1a1a1a',
-      color: '#00ff00',
+      fontFamily: 'Times New Roman, serif',
+      background: '#000080',
+      color: '#FFFF00',
       minHeight: '100vh',
-      padding: '20px'
+      padding: '0',
+      margin: '0'
     }}>
-      <h1 style={{ color: '#ff6b6b' }}>🔒 Container Breakout Security Test</h1>
-      <p style={{ color: '#ffd93d' }}>
-        Testing application for container escape vulnerabilities
-      </p>
-
-      <div style={{ marginBottom: '20px' }}>
-        <h3>Preset Commands:</h3>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '5px',
-          marginBottom: '20px'
-        }}>
-          {presetCommands.map((cmd, idx) => (
-            <button
-              key={idx}
-              onClick={() => executeCommand(cmd)}
-              disabled={loading}
-              style={{
-                background: '#333',
-                color: '#00ff00',
-                border: '1px solid #555',
-                padding: '5px 10px',
-                cursor: 'pointer',
-                fontSize: '12px',
-                textAlign: 'left'
-              }}
-            >
-              {cmd}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div style={{ marginBottom: '20px' }}>
-        <input
-          type="text"
-          value={command}
-          onChange={(e) => setCommand(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && executeCommand()}
-          placeholder="Enter custom command..."
-          disabled={loading}
-          style={{
-            background: '#333',
-            color: '#00ff00',
-            border: '1px solid #555',
-            padding: '10px',
-            width: '70%',
-            marginRight: '10px'
-          }}
-        />
-        <button
-          onClick={() => executeCommand()}
-          disabled={loading || !command.trim()}
-          style={{
-            background: '#666',
-            color: 'white',
-            border: 'none',
-            padding: '10px 20px',
-            cursor: 'pointer',
-            marginRight: '10px'
-          }}
-        >
-          {loading ? 'Executing...' : 'Execute'}
-        </button>
-        <button
-          onClick={clearOutput}
-          style={{
-            background: '#ff6b6b',
-            color: 'white',
-            border: 'none',
-            padding: '10px 20px',
-            cursor: 'pointer'
-          }}
-        >
-          Clear
-        </button>
-      </div>
-
+      {/* Retro under construction banner */}
       <div style={{
-        background: '#000',
-        border: '1px solid #333',
-        padding: '20px',
-        maxHeight: '500px',
-        overflowY: 'auto'
+        background: 'linear-gradient(90deg, #FF0000, #FFFF00, #FF0000)',
+        padding: '5px',
+        textAlign: 'center',
+        fontSize: '12px',
+        fontWeight: 'bold',
+        color: '#000',
+        borderBottom: '3px solid #FF0000'
       }}>
-        {output.length === 0 ? (
-          <div style={{ color: '#666' }}>No commands executed yet...</div>
-        ) : (
-          output.map((entry, idx) => (
-            <div key={idx} style={{ marginBottom: '20px', borderBottom: '1px solid #333', paddingBottom: '10px' }}>
-              <div style={{ color: '#ffd93d' }}>
-                $ {entry.command}
-              </div>
-              <div style={{ color: '#666', fontSize: '12px' }}>
-                {entry.timestamp} | PID: {entry.env?.PID}
-              </div>
-
-              {entry.success ? (
-                <div>
-                  {entry.result?.stdout && (
-                    <pre style={{ color: '#00ff00', margin: '5px 0' }}>
-                      {entry.result.stdout}
-                    </pre>
-                  )}
-                  {entry.result?.stderr && (
-                    <pre style={{ color: '#ff6b6b', margin: '5px 0' }}>
-                      {entry.result.stderr}
-                    </pre>
-                  )}
-                </div>
-              ) : (
-                <pre style={{ color: '#ff6b6b', margin: '5px 0' }}>
-                  ERROR: {entry.error}
-                </pre>
-              )}
-            </div>
-          ))
-        )}
+        🚧 UNDER CONSTRUCTION 🚧 BEST VIEWED IN NETSCAPE NAVIGATOR 4.0 🚧
       </div>
 
-      <div style={{ marginTop: '20px', color: '#666', fontSize: '12px' }}>
-        <p>⚠️ This application intentionally attempts dangerous operations to test container security.</p>
-        <p>Use only in isolated testing environments with proper monitoring.</p>
-      </div>
+      {/* Main content table layout */}
+      <table width="100%" cellPadding="0" cellSpacing="10" style={{ background: '#000080' }}>
+        <tr>
+          <td colSpan="2" align="center">
+            <h1 style={{
+              fontSize: '48px',
+              color: '#FF00FF',
+              fontFamily: 'Impact, Arial Black, sans-serif',
+              textShadow: '3px 3px 0px #00FF00',
+              letterSpacing: '5px',
+              margin: '20px 0'
+            }}>
+              *** XXXTENTACION MEMORIAL PAGE ***
+            </h1>
+
+            <img
+              src="/spinning-skull.gif"
+              width="50"
+              height="50"
+              style={{ margin: '0 10px' }}
+              alt="spinning skull"
+            />
+
+            <font size="6" color="#00FF00">
+              <blink>★ LONG LIVE JAHSEH ★</blink>
+            </font>
+
+            <img
+              src="/spinning-skull.gif"
+              width="50"
+              height="50"
+              style={{ margin: '0 10px' }}
+              alt="spinning skull"
+            />
+
+            <br /><br />
+
+            <marquee behavior="scroll" direction="left" scrollamount="5" style={{
+              background: '#FF0000',
+              color: '#FFFF00',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              padding: '10px'
+            }}>
+              💀💀💀 XXXTENTACION FOREVER - JUNE 18 1998 - JUNE 18 2018 - RIP KING 💀💀💀
+            </marquee>
+          </td>
+        </tr>
+
+        <tr>
+          {/* Left Column */}
+          <td width="50%" valign="top">
+            <table width="100%" cellPadding="10" cellSpacing="2" border="2" style={{ background: '#800080', borderColor: "#FF00FF" }}>
+              <tr>
+                <td align="center" style={{ background: '#FF0000' }}>
+                  <font size="5" color="#FFFF00"><b>🎵 HIS GREATEST HITS 🎵</b></font>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ background: '#000000' }}>
+                  {topTracks.map((track, idx) => (
+                    <div key={idx} style={{ margin: '5px 0' }}>
+                      <button
+                        onClick={() => setSelectedTrack(track)}
+                        style={{
+                          background: selectedTrack === track ? '#FF0000' : '#0000FF',
+                          color: '#FFFF00',
+                          border: '2px outset #808080',
+                          padding: '5px 10px',
+                          fontSize: '14px',
+                          fontFamily: 'Arial, sans-serif',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          width: '100%'
+                        }}
+                      >
+                        ♪ {track} ♪
+                      </button>
+                    </div>
+                  ))}
+
+                  {selectedTrack && (
+                    <div style={{
+                      marginTop: '20px',
+                      padding: '15px',
+                      background: '#FF0000',
+                      border: '3px ridge #808080',
+                      textAlign: 'center'
+                    }}>
+                      <font size="4" color="#FFFF00">
+                        <blink>NOW PLAYING:</blink><br />
+                        <b>{selectedTrack}</b>
+                      </font><br />
+                      <font size="2" color="#00FF00">
+                        ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫
+                      </font>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            </table>
+
+            <br />
+
+            {/* Web ring */}
+            <table width="100%" cellPadding="5" cellSpacing="2" border="1" borderColor="#00FF00" style={{ background: '#008000', marginTop: "auto" }}>
+              <tr>
+                <td align="center">
+                  <font size="3" color="#FFFF00"><b>XXXTENTACION WEBRING</b></font><br />
+                  <font size="2" color="#FFFFFF">
+                    <a href="#" style={{ color: '#00FFFF' }}>&lt;&lt; PREV</a> |
+                    <a href="#" style={{ color: '#00FFFF' }}>RANDOM</a> |
+                    <a href="#" style={{ color: '#00FFFF' }}>NEXT &gt;&gt;</a><br />
+                    <a href="#" style={{ color: '#FFFF00' }}>JOIN THE RING!</a>
+                  </font>
+                </td>
+              </tr>
+            </table>
+          </td>
+
+          {/* Right Column */}
+          <td width="50%" valign="top">
+            <table width="100%" cellPadding="10" cellSpacing="2" border="2" borderColor="#00FF00" style={{ background: '#008000' }}>
+              <tr>
+                <td align="center" style={{ background: '#FF0000' }}>
+                  <font size="5" color="#FFFF00"><b>📝 SIGN MY GUESTBOOK! 📝</b></font>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ background: '#000000' }}>
+                  <form onSubmit={(e) => { e.preventDefault(); addGuestbookEntry(); }}>
+                    <font color="#FFFF00">Your Name:</font><br />
+                    <input
+                      type="text"
+                      value={visitorName}
+                      onChange={(e) => setVisitorName(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '3px',
+                        fontSize: '12px',
+                        fontFamily: 'Arial, sans-serif',
+                        border: '2px inset #808080'
+                      }}
+                    /><br /><br />
+
+                    <font color="#FFFF00">Message:</font><br />
+                    <textarea
+                      value={newEntry}
+                      onChange={(e) => setNewEntry(e.target.value)}
+                      rows="4"
+                      style={{
+                        width: '100%',
+                        padding: '3px',
+                        fontSize: '12px',
+                        fontFamily: 'Arial, sans-serif',
+                        border: '2px inset #808080',
+                        resize: 'none'
+                      }}
+                    /><br /><br />
+
+                    <input
+                      type="submit"
+                      value="SIGN GUESTBOOK!"
+                      style={{
+                        background: '#FF0000',
+                        color: '#FFFF00',
+                        border: '2px outset #808080',
+                        padding: '5px 15px',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer'
+                      }}
+                    />
+                  </form>
+
+                  <br />
+                  <hr color="#FF00FF" size="3" />
+
+                  <div style={{
+                    height: '200px',
+                    overflow: 'auto',
+                    background: '#800000',
+                    border: '2px inset #808080',
+                    padding: '5px'
+                  }}>
+                    {guestbookEntries.map((entry, idx) => (
+                      <div key={idx} style={{
+                        marginBottom: '10px',
+                        borderBottom: '1px dotted #FFFF00',
+                        paddingBottom: '5px'
+                      }}>
+                        <font size="1" color="#00FF00">{entry}</font>
+                      </div>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+            <br />
+
+            {/* Stats counter */}
+            <table width="100%" cellPadding="5" border="1" borderColor="#FF0000" style={{ background: '#800000' }}>
+              <tr>
+                <td align="center">
+                  <font size="2" color="#FFFF00">
+                    <b>VISITOR COUNTER:</b><br />
+                    <font size="4" color="#00FF00">000420</font><br />
+                    You are visitor #420 since 06/18/18
+                  </font>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        {/* Bottom Row */}
+        <tr>
+          <td colSpan="2">
+            <center>
+              <table width="90%" cellPadding="15" cellSpacing="2" border="3" borderColor="#FF00FF" style={{ background: '#400040' }}>
+                <tr>
+                  <td align="center">
+                    <font size="6" color="#FF0000">
+                      <blink>💔 R.I.P XXXTENTACION 💔</blink>
+                    </font><br />
+                    <font size="4" color="#FFFF00">
+                      "What is real will prosper"<br />
+                      - Jahseh Dwayne Ricardo Onfroy
+                    </font><br /><br />
+
+                    <marquee behavior="alternate" width="50%">
+                      <font color="#00FF00">🕊️ LLJ FOREVER 🕊️</font>
+                    </marquee>
+                  </td>
+                </tr>
+              </table>
+
+              <br />
+
+              <font size="1" color="#808080">
+                This page is best viewed with Internet Explorer 4.0 at 800x600 resolution<br />
+                Last updated: August 20, 2025 | Webmaster: xXx_REVENGE_WEBMASTER_xXx<br />
+                <a href="#" style={{ color: '#00FFFF' }}>Email me!</a> |
+                <a href="#" style={{ color: '#00FFFF' }}>View Source</a> |
+                <a href="#" style={{ color: '#00FFFF' }}>Sign Guestbook</a><br />
+                <br />
+
+              </font>
+              <img src="/fatfree.gif" width="160" height="30" style={{ background: '#FFFF00', color: '#000000', padding: '2px', border: '1px solid #000', marginTop: "auto" }} />
+            </center>
+          </td>
+        </tr>
+      </table>
     </div>
   );
 }
