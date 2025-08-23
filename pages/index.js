@@ -108,7 +108,7 @@ export default function XXXTentacionFanPage() {
               fontWeight: 'bold',
               padding: '10px'
             }}>
-              💀💀💀 Test 1 💀💀💀
+              💀💀💀 Test 2 💀💀💀
             </marquee>
           </td>
         </tr>
