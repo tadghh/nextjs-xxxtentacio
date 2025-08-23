@@ -101,6 +101,15 @@ export default function XXXTentacionFanPage() {
             }}>
               💀💀💀 XXXTENTACION FOREVER - JUNE 18 1998 - JUNE 18 2018 - RIP KING 💀💀💀
             </marquee>
+            <marquee behavior="scroll" direction="left" scrollamount="5" style={{
+              background: '#FF0000',
+              color: '#FFFF00',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              padding: '10px'
+            }}>
+              💀💀💀 Test 1 💀💀💀
+            </marquee>
           </td>
         </tr>
 
