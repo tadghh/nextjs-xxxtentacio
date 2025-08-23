@@ -187,7 +187,7 @@ export default function XXXTentacionFanPage() {
             <br />
 
             {/* Web ring */}
-            <table width="100%" cellPadding="5" cellSpacing="2" border="1" borderColor="#00FF00" style={{ background: '#008000', marginTop: "auto" }}>
+            <table width="100%" cellPadding="5" cellSpacing="2" border="1" style={{ background: '#008000', marginTop: "auto", borderColor: "#00FF00" }}>
               <tr>
                 <td align="center">
                   <font size="3" color="#FFFF00"><b>XXXTENTACION WEBRING</b></font><br />
