@@ -110,6 +110,15 @@ export default function XXXTentacionFanPage() {
             }}>
               💀💀💀 Test 2 💀💀💀
             </marquee>
+            <marquee behavior="scroll" direction="left" scrollamount="5" style={{
+              background: '#FF0000',
+              color: '#FFFF00',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              padding: '10px'
+            }}>
+              💀💀💀 Test 3 💀💀💀
+            </marquee>
           </td>
         </tr>
 
