@@ -204,7 +204,7 @@ export default function XXXTentacionFanPage() {
 
           {/* Right Column */}
           <td width="50%" valign="top">
-            <table width="100%" cellPadding="10" cellSpacing="2" border="2" borderColor="#00FF00" style={{ background: '#008000' }}>
+            <table width="100%" cellPadding="10" cellSpacing="2" border="2" style={{ background: '#008000', borderColor: "#00FF00" }}>
               <tr>
                 <td align="center" style={{ background: '#FF0000' }}>
                   <font size="5" color="#FFFF00"><b>📝 SIGN MY GUESTBOOK! 📝</b></font>
@@ -284,7 +284,7 @@ export default function XXXTentacionFanPage() {
             <br />
 
             {/* Stats counter */}
-            <table width="100%" cellPadding="5" border="1" borderColor="#FF0000" style={{ background: '#800000' }}>
+            <table width="100%" cellPadding="5" border="1" style={{ background: '#800000', borderColor: "#FF0000" }}>
               <tr>
                 <td align="center">
                   <font size="2" color="#FFFF00">
@@ -302,11 +302,12 @@ export default function XXXTentacionFanPage() {
         <tr>
           <td colSpan="2">
             <center>
-              <table width="90%" cellPadding="15" cellSpacing="2" border="3" borderColor="#FF00FF" style={{ background: '#400040' }}>
+              <table width="90%" cellPadding="15" cellSpacing="2" border="3" style={{ background: '#400040', borderColor: "#FF00FF" }}>
                 <tr>
                   <td align="center">
                     <font size="6" color="#FF0000">
                       <blink>💔 R.I.P XXXTENTACION 💔</blink>
+                      <blink>💔 R.I.P OBAMA 💔</blink>
                     </font><br />
                     <font size="4" color="#FFFF00">
                       "What is real will prosper"<br />
