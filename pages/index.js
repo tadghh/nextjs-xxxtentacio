@@ -333,6 +333,7 @@ export default function XXXTentacionFanPage() {
 
               </font>
               <img src="/fatfree.gif" width="160" height="30" style={{ background: '#FFFF00', color: '#000000', padding: '2px', border: '1px solid #000', marginTop: "auto" }} />
+              <img src="/fatfree.gif" width="160" height="30" style={{ background: '#FFFF00', color: '#000000', padding: '2px', border: '1px solid #000', marginTop: "auto" }} />
             </center>
           </td>
         </tr>
